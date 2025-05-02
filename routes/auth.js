@@ -2,6 +2,8 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const db = require('../db/database');
 const jwt = require('jsonwebtoken');
+const verifyToken = require('../middleware/verifyToken');
+
 
 const router = express.Router();
 
@@ -68,6 +70,14 @@ router.post('/login', (req, res) => {
         message: 'inloggning lyckades!',
         token: token
       });
+    });
+  });
+
+  // get /api/secret skyddad route
+router.get('/secret', verifyToken, (req, res) => {
+    res.status(200).json({
+      message: 'du är inloggad och har åtkomst till denna route',
+      user: req.user // id och username från token
     });
   });
   
