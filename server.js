@@ -11,7 +11,12 @@ const app = express();
 
 // middleware för att tolka json och hantera cors
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'https://ubiquitous-kangaroo-91073e.netlify.app',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
+  
 
 // importerar routes 
 const authRoutes = require('./routes/auth');
